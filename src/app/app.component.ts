@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ItemService } from './item.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app';
+	constructor(private itemService: ItemService) { }
+
+  ngOnInit(): void {
+  	console.log(this.itemService);
+  }
+  ngOnDestroy(): void {
+  }
 }
