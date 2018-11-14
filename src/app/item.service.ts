@@ -45,6 +45,7 @@ export class ItemService {
 		let matchingItems = this.items.filter((item, i) => {
 			return item.fillFactor <= fillFactor && item.tracking === true
 		});
+		console.log(matchingItems);
 		return matchingItems.map((item, i) => {
 			return [item.itemType, item.fillFactor]
 		});
@@ -54,9 +55,11 @@ export class ItemService {
   	let matchingItems = this.items.filter((item, i) => {
 			return item.itemType === itemType
 		});
+		console.log(matchingItems);
 		let itemTypeFillSum = matchingItems.reduce((total, item) => {
+			console.log(total, item);
 			return total + item.fillFactor;
-		});
+		}, 0);
 		console.log(itemTypeFillSum);
 		return itemTypeFillSum / matchingItems.length;
   }

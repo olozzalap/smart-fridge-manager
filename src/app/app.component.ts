@@ -11,7 +11,7 @@ export class AppComponent {
 
 	newItemName: string;
 	newItemType: string;
-	newItemFill: number;
+	newItemFill: number = 1;
 
 	getFillType: string;
 	prevGetFillType: string;
