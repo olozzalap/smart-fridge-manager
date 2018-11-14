@@ -7,25 +7,62 @@
 
   <section class="row">
     <aside class="item-list bg-success col-lg-4 col-md-5">
-      <ul>
-        <li>item 1</li>
-        <li>item 2</li>
-        <li>item ahwjebajhbdw</li>
-      </ul>
+      <div class="card" 
+        *ngFor="let item of itemService.items" 
+        [ngClass]="{ 'bg-warning' : !item.tracking }">
+        <div class="card-body">
+          <h5 class="card-title">Name: {{item.name}}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">Type: {{item.itemType}}</h6>
+          <p>FillFactor: {{item.fillFactor.toFixed(2) * 100}}%</p>
+          <a href="#" class="card-link" (click)="itemService.handleItemRemoved(item.itemUUID)">Remove?</a>
+          <a href="#" class="card-link" 
+            *ngIf="item.tracking" 
+            (click)="itemService.forgetItem(item.itemType)">
+            Forget items of this type?
+          </a>
+        </div>
+      </div>
     </aside>
     <article class="item-panel bg-light p-4 text-center col-lg-8 col-md-7">
       <div class="row">
         <div class="col">
-          <label> Item to Add
-            <input type="text" />
+          <h3>Add new item</h3>
+          <label>Item Name: 
+            <input type="text" [(ngModel)]="newItemName" />
           </label>
+          <label>Item Type: 
+            <input type="text" [(ngModel)]="newItemType" />
+          </label>
+          <label>Item Fill: 
+            <input type="range" [(ngModel)]="newItemFill" min="0" max="1" step=".01">
+          </label>
+          <button class="bg-primary" (click)="submitNewItem()">Submit</button>
         </div>
       </div>
       <div class="row">
         <div class="col">
-          <label> Fill Level to query
-            <input type="range" />
+          <h3>Get average fill for type</h3>
+          <label>Type: 
+            <input type="text" [(ngModel)]="getFillType" />
           </label>
+          <button class="bg-primary" (click)="getAvgFillByType()">Submit</button>
+          <h4>Avergage {{getAvgFillByTypeResult.toFixed(2) * 100}}% Fill for {{prevGetFillType}}</h4>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <h3>Get items below given fill level</h3>
+          <label>Fill Level: 
+            <input type="range" [(ngModel)]="getItemsFill" min="0" max="1" step=".01">
+          </label>
+          <button class="bg-primary" (click)="getItemsByFill()">Submit</button>
+          <p class="pt-2 text-dark" *ngIf="getItemsResult.length > 0">Results: </p>
+          <div class="card" *ngFor="let item of getItemsResult" >
+            <div class="card-body">
+              <h5 class="card-title">Type: {{item[0]}}</h5>
+              <h6 class="card-subtitle mb-2 text-muted">FillFactor: {{item[1].toFixed(2) * 100}}%</h6>
+            </div>
+          </div>
         </div>
       </div>
     </article>

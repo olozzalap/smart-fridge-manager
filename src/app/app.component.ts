@@ -9,9 +9,35 @@ import { ItemService } from './item.service';
 export class AppComponent {
 	constructor(private itemService: ItemService) { }
 
+	newItemName: string;
+	newItemType: string;
+	newItemFill: number;
+
+	getFillType: string;
+	prevGetFillType: string;
+	getAvgFillByTypeResult: number;
+
+	getItemsFill: number;
+	getItemsResult: Array<any[]>;
+
   ngOnInit(): void {
   	console.log(this.itemService);
   }
   ngOnDestroy(): void {
+  }
+
+  submitNewItem(): void {
+  	this.itemService.handleItemAdded(this.newItemType.toLowerCase(), this.newItemName, this.newItemFill);
+  	this.newItemType = "";
+  	this.newItemName = "";
+  	this.newItemFill = 1;
+  }
+  getAvgFillByType(): void {
+  	this.getAvgFillByTypeResult = this.itemService.getFillFactor(this.getFillType.toLowerCase());
+  	this.prevGetFillType = this.getFillType;
+  	this.getFillType = "";
+  }
+  getItemsByFill(): void {
+  	this.getItemsResult = this.itemService.getItems(this.getItemsFill);
   }
 }
