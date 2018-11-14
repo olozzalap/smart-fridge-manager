@@ -17,7 +17,7 @@ export class AppComponent {
 	prevGetFillType: string;
 	getAvgFillByTypeResult: number;
 
-	getItemsFill: number;
+	getItemsFill: number = .5;
 	getItemsResult: Array<any[]>;
 
   ngOnInit(): void {
